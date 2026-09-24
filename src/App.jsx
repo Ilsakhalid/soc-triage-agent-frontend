@@ -3,6 +3,7 @@ import DashboardPage from "./pages/DashboardPage"
 import SignupPage from './pages/SignupPage';
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import HistoryPage from './pages/HistoryPage';
+import { API_URL } from '../config';
 
 function App() {
   return(
