@@ -1,4 +1,4 @@
-import LoginPage from "./pages/loginPage";
+import LoginPage from "./pages/LoginPage";
 import DashboardPage from "./pages/DashboardPage"
 import SignupPage from './pages/SignupPage';
 import { BrowserRouter, Routes, Route } from "react-router-dom";
