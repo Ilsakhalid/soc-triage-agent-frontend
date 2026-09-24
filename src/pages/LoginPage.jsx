@@ -12,7 +12,7 @@ function LoginPage() {
 
   const handleLogin = async () => {
     try {
-      const response = await axios.post('${API_URL}/login', { email, password });
+      const response = await axios.post(`${API_URL}/login`, { email, password });
       const token = response.data.token;
       localStorage.setItem('token', token);
       navigate('/dashboard');

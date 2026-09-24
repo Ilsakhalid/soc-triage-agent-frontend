@@ -12,7 +12,7 @@ function SignupPage() {
 
   const handleSignup = async () => {
     try {
-      await axios.post('h${API_URL}/signup', { email, password });
+      await axios.post(`${API_URL}/signup`, { email, password });
       navigate('/');
     } catch (err) {
       setError('Sorry, could not sign up.');

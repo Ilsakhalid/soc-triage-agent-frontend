@@ -95,7 +95,7 @@ useEffect(() => {
       let response;
       if (type === 'email') {
         response = await axios.post(
-          '${API_URL}/check-email',
+          `${API_URL}/check-email`,
           { email: input },
           { headers: { Authorization: `Bearer ${token}` } }
         );

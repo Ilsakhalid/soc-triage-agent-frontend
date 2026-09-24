@@ -13,7 +13,7 @@ function HistoryPage() {
     const fetchHistory = async () => {
       const token = localStorage.getItem('token');
       try {
-        const response = await axios.get('${API_URL}/history', {
+        const response = await axios.get(`${API_URL}/history`, {
           headers: { Authorization: `Bearer ${token}` }
         });
         setChecks(response.data);
