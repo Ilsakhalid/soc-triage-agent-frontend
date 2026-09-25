@@ -6,13 +6,17 @@ import HistoryPage from './pages/HistoryPage';
 
 function App() {
   return(
-    <BrowserRouter>
+     <BrowserRouter>
     <Routes>
       <Route path="/" element={<LoginPage/>}></Route>
-      <Route path="/dashboard" element={<DashboardPage/>}></Route>
+      <Route path="/dashboard" element={
+        <ProtectedRoute><DashboardPage/></ProtectedRoute>
+      }></Route>
       <Route path="/signup" element={<SignupPage />} />
-      <Route path="/history" element={<HistoryPage />} />
-      </Routes>
+      <Route path="/history" element={
+        <ProtectedRoute><HistoryPage /></ProtectedRoute>
+      } />
+    </Routes>
     </BrowserRouter>
   );
 }

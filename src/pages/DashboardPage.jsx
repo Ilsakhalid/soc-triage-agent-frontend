@@ -1,10 +1,10 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
+import api from '../api';
 import { Search, Link as LinkIcon, Globe, Fingerprint, Mail, LogOut, ShieldAlert } from 'lucide-react';
 import { useRef, useEffect } from 'react';
 import {Link } from 'react-router-dom';
-import { API_URL } from '../config';
+
 
 const TABS = [
   { id: 'ip', label: 'IP' },
@@ -85,36 +85,36 @@ useEffect(() => {
   };
 
   const runCheck = async (type, input) => {
-    setLoading(true);
-    setError('');
-    setNotFoundMsg('');
-    setResult(null);
-    const token = localStorage.getItem('token');
+  setLoading(true);
+  setError('');
+  setNotFoundMsg('');
+  setResult(null);
 
-    try {
-      let response;
-      if (type === 'email') {
-        response = await axios.post(
-          `${API_URL}/check-email`,
-          { email: input },
-          { headers: { Authorization: `Bearer ${token}` } }
-        );
-      } else {
-        let url = '';
-        if (type === 'ip') url = `${API_URL}/check-ip/${input}`;
-        if (type === 'domain') url = `${API_URL}/check-domain/${input}`;
-        if (type === 'hash') url = `${API_URL}/check-hash/${input}`;
-        if (type === 'url') url = `${API_URL}/check-url?url=${encodeURIComponent(input)}`;
+  try {
+    let response;
+    if (type === 'email') {
+      response = await api.post('/check-email', { email: input });
+    } else {
+      let url = '';
+      if (type === 'ip') url = `/check-ip/${input}`;
+      if (type === 'domain') url = `/check-domain/${input}`;
+      if (type === 'hash') url = `/check-hash/${input}`;
+      if (type === 'url') url = `/check-url?url=${encodeURIComponent(input)}`;
 
-        response = await axios.get(url, {
-          headers: { Authorization: `Bearer ${token}` }
-        });
-      }
-      setResult(response.data);
-    } catch (err) {
+      response = await api.get(url);
+    }
+    setResult(response.data);
+  } catch (err) {
       if (err.response?.status === 404 && err.response?.data?.notFound) {
         setNotFoundMsg(err.response.data.error || 'No record found for this indicator.');
-      } else {
+      }
+        else if (err.response?.status === 503) {
+  setNotFoundMsg(err.response?.data?.error || 'AI analysis is temporarily unavailable due to high demand.');
+    }
+        else if (err.response?.status === 429) {
+  setNotFoundMsg(err.response?.data?.error || 'Rate limit reached. Please wait a moment and try again.');
+} 
+        else {
         setError('Check failed. Please verify the input and try again.');
       }
     } finally {

@@ -1,8 +1,8 @@
 import { useState } from "react";
-import axios from "axios";
+import api from '../api';
 import { useNavigate, Link } from "react-router-dom";
 import { ShieldAlert } from "lucide-react";
-import { API_URL } from '../config';
+
 
 function LoginPage() {
   const [email, setEmail] = useState('');
@@ -12,7 +12,7 @@ function LoginPage() {
 
   const handleLogin = async () => {
     try {
-      const response = await axios.post(`${API_URL}/login`, { email, password });
+      const response = await api.post('/login', { email, password });
       const token = response.data.token;
       localStorage.setItem('token', token);
       navigate('/dashboard');

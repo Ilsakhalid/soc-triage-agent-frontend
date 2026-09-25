@@ -1,8 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
-import axios from 'axios';
+import api from '../api';
 import { ShieldAlert, LogOut, ArrowLeft } from 'lucide-react';
-import { API_URL } from '../config';
 
 function HistoryPage() {
   const [checks, setChecks] = useState([]);
@@ -13,7 +12,7 @@ function HistoryPage() {
     const fetchHistory = async () => {
       const token = localStorage.getItem('token');
       try {
-        const response = await axios.get(`${API_URL}/history`, {
+        const response = await api.get('/history', {
           headers: { Authorization: `Bearer ${token}` }
         });
         setChecks(response.data);

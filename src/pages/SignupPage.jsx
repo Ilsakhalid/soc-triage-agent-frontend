@@ -1,8 +1,8 @@
 import { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
-import axios from "axios";
+import api from '../api';
 import { ShieldAlert } from "lucide-react";
-import { API_URL } from '../config';
+
 
 function SignupPage() {
   const [email, setEmail] = useState('');
@@ -12,7 +12,7 @@ function SignupPage() {
 
   const handleSignup = async () => {
     try {
-      await axios.post(`${API_URL}/signup`, { email, password });
+      await api.post('/signup', { email, password });
       navigate('/');
     } catch (err) {
       setError('Sorry, could not sign up.');
